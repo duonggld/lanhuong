@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy 8/3 💖</title>
+
+<style>
+html,body{
+    margin:0;
+    padding:0;
+    height:100%;
+    overflow:hidden;
+    font-family:'Segoe UI',sans-serif;
+}
+
+/* ===== NỀN CAO CẤP ===== */
+body{
+    background:linear-gradient(-45deg,#ffd6e7,#ffc1d6,#ffb6c1,#ffe4ec);
+    background-size:400% 400%;
+    animation:gradientMove 15s ease infinite;
+    position:relative;
+}
+
+@keyframes gradientMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* Glow trung tâm */
+body::before{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:radial-gradient(circle,rgba(255,255,255,0.4),transparent 70%);
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    animation:glowMove 8s ease-in-out infinite alternate;
+    pointer-events:none;
+    z-index:0;
+}
+
+@keyframes glowMove{
+    from{transform:translate(-50%,-50%) scale(1);}
+    to{transform:translate(-50%,-50%) scale(1.2);}
+}
+
+/* ===== LOCK SCREEN ===== */
+.lock-screen{
+    position:fixed;
+    width:100%;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:10;
+}
+
+.lock-screen input{
+    padding:10px;
+    border:none;
+    border-radius:20px;
+    margin-top:10px;
+    text-align:center;
+}
+
+.lock-screen button{
+    margin-top:10px;
+    padding:8px 15px;
+    border:none;
+    border-radius:20px;
+    background:#e91e63;
+    color:white;
+    cursor:pointer;
+}
+
+/* ===== PHONG THƯ FIX HOÀN TOÀN ===== */
+.envelope-wrapper{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    perspective:1200px;
+    z-index:5;
+}
+
+.envelope{
+    width:320px;
+    height:200px;
+    position:relative;
+    cursor:pointer;
+}
+
+.envelope-body{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#f8bbd0;
+    border-radius:12px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.3);
+    overflow:hidden;
+}
+
+/* Nắp */
+.flap{
+    position:absolute;
+    width:100%;
+    height:110px;
+    background:#f48fb1;
+    top:0;
+    transform-origin:top;
+    transition:0.8s;
+    clip-path:polygon(0 0,100% 0,50% 100%);
+    z-index:3;
+}
+
+/* Lá thư */
+.letter{
+    position:absolute;
+    width:90%;
+    height:160px;
+    background:white;
+    bottom:-100%; /* ẨN HOÀN TOÀN */
+    left:5%;
+    border-radius:10px;
+    padding:15px;
+    box-sizing:border-box;
+    transition:0.8s;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    z-index:2;
+}
+
+h2{color:#e91e63;margin-top:0;}
+
+/* ===== HOA RƠI ===== */
+.flower{
+    position:absolute;
+    font-size:20px;
+    animation:fall linear infinite;
+    z-index:1;
+}
+@keyframes fall{
+    from{transform:translateY(-10vh) rotate(0deg);}
+    to{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* ===== ẢNH 3D ===== */
+.floating-img{
+    position:absolute;
+    width:90px;
+    border-radius:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    animation:float3d linear infinite;
+    z-index:1;
+}
+@keyframes float3d{
+    from{transform:translateY(110vh) rotateY(0deg);}
+    to{transform:translateY(-120vh) rotateY(360deg);}
+}
+
+/* ===== PHÁO HOA ===== */
+.firework{
+    position:absolute;
+    width:6px;
+    height:6px;
+    background:gold;
+    border-radius:50%;
+    animation:explode 1s ease-out forwards;
+    z-index:2;
+}
+@keyframes explode{
+    from{transform:scale(1);opacity:1;}
+    to{transform:scale(20);opacity:0;}
+}
+
+/* ===== TIM BAY ===== */
+.heart{
+    position:absolute;
+    font-size:20px;
+    animation:heartUp 5s linear infinite;
+    z-index:2;
+}
+@keyframes heartUp{
+    from{transform:translateY(100vh);}
+    to{transform:translateY(-10vh);}
+}
+
+/* ===== SPARKLE ===== */
+.sparkle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    background:white;
+    border-radius:50%;
+    opacity:0.8;
+    animation:sparkleMove linear infinite;
+    z-index:1;
+}
+@keyframes sparkleMove{
+    from{transform:translateY(100vh);opacity:0;}
+    50%{opacity:1;}
+    to{transform:translateY(-10vh);opacity:0;}
+}
+</style>
+</head>
+<body>
+
+<audio id="music" loop>
+<source src="nhac.mp3" type="audio/mpeg">
+</audio>
+
+<div class="lock-screen" id="lock">
+    <h2>🔐 Nhập mật khẩu để vào</h2>
+    <input type="password" id="pass" placeholder="Nhập mật khẩu">
+    <button onclick="checkPass()">Mở</button>
+</div>
+
+<div class="envelope-wrapper" style="display:none;" id="wrapper">
+    <div class="envelope" onclick="openEnvelope()">
+        <div class="envelope-body">
+            <div class="letter" id="letter">
+                <h2>Happy Women’s Day 8/3 💐</h2>
+                <p id="typing"></p>
+            </div>
+        </div>
+        <div class="flap" id="flap"></div>
+    </div>
+</div>
+
+<script>
+const PASSWORD="0803";
+
+function checkPass(){
+    if(document.getElementById("pass").value===PASSWORD){
+        document.getElementById("lock").style.display="none";
+        document.getElementById("wrapper").style.display="block";
+        document.getElementById("music").play();
+        startBackground();
+    }else{
+        alert("Sai mật khẩu rồi 😝");
+    }
+}
+
+function startBackground(){
+    setInterval(()=>{
+        let f=document.createElement("div");
+        f.className="flower";
+        f.innerHTML="🌸";
+        f.style.left=Math.random()*100+"vw";
+        f.style.animationDuration=(Math.random()*5+5)+"s";
+        document.body.appendChild(f);
+        setTimeout(()=>f.remove(),10000);
+    },300);
+
+    const imgs=["1.jpg","2.jpg","3.jpg","4.jpg"];
+    setInterval(()=>{
+        let img=document.createElement("img");
+        img.src=imgs[Math.floor(Math.random()*imgs.length)];
+        img.className="floating-img";
+        img.style.left=Math.random()*100+"vw";
+        img.style.animationDuration=(Math.random()*10+10)+"s";
+        document.body.appendChild(img);
+        setTimeout(()=>img.remove(),20000);
+    },1200);
+
+    setInterval(()=>{
+        let s=document.createElement("div");
+        s.className="sparkle";
+        s.style.left=Math.random()*100+"vw";
+        s.style.animationDuration=(Math.random()*5+5)+"s";
+        document.body.appendChild(s);
+        setTimeout(()=>s.remove(),8000);
+    },200);
+}
+
+function openEnvelope(){
+    document.getElementById("flap").style.transform="rotateX(-180deg)";
+    document.getElementById("letter").style.bottom="20px";
+    typeEffect();
+    startFirework();
+    startHearts();
+}
+
+const text="Chúc em luôn xinh đẹp, hạnh phúc và mãi là điều tuyệt vời nhất trong cuộc đời anh 💖";
+let i=0;
+function typeEffect(){
+    if(i<text.length){
+        document.getElementById("typing").innerHTML+=text.charAt(i);
+        i++;
+        setTimeout(typeEffect,50);
+    }
+}
+
+function startFirework(){
+    for(let i=0;i<25;i++){
+        let fw=document.createElement("div");
+        fw.className="firework";
+        fw.style.left=Math.random()*100+"vw";
+        fw.style.top=Math.random()*100+"vh";
+        document.body.appendChild(fw);
+        setTimeout(()=>fw.remove(),1000);
+    }
+}
+
+function startHearts(){
+    setInterval(()=>{
+        let h=document.createElement("div");
+        h.className="heart";
+        h.innerHTML="💖";
+        h.style.left=Math.random()*100+"vw";
+        h.style.fontSize=(Math.random()*20+15)+"px";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),5000);
+    },400);
+}
+</script>
+
+</body>
+</html>
